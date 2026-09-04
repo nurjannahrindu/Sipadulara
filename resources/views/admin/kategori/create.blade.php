@@ -4,73 +4,115 @@
 
 @section('content')
 
-    <h1>Tambah Kategori</h1>
+<div class="page-header">
 
-    <p style="color:#6b7280;">
-        Tambahkan kategori pengaduan baru.
-    </p>
+    <div>
+        <h1>Tambah Kategori</h1>
 
-    <div class="card">
+        <p style="color:#64748b; margin-top:5px;">
+            Tambahkan kategori pengaduan baru.
+        </p>
+    </div>
 
-        <form
-            action="{{ route('admin.kategori.store') }}"
-            method="POST"
-        >
-
-            @csrf
-
-            <div style="margin-bottom:15px;">
-
-                <label>
-                    <strong>Nama Kategori</strong>
-                </label>
-
-                <br>
-
-                <input
-                    type="text"
-                    name="nama_kategori"
-                    value="{{ old('nama_kategori') }}"
-                    required
-                    style="width:100%;padding:10px;margin-top:5px;"
-                >
-
-                @error('nama_kategori')
-                    <p style="color:red;">
-                        {{ $message }}
-                    </p>
-                @enderror
-
-            </div>
+</div>
 
 
-            <div style="margin-bottom:15px;">
+<div class="card">
 
-                <label>
-                    <strong>Deskripsi</strong>
-                </label>
+    <form
+        action="{{ route('admin.kategori.store') }}"
+        method="POST"
+    >
 
-                <br>
+        @csrf
 
-                <textarea
-                    name="deskripsi"
-                    rows="4"
-                    style="width:100%;padding:10px;margin-top:5px;"
-                >{{ old('deskripsi') }}</textarea>
 
-                @error('deskripsi')
-                    <p style="color:red;">
-                        {{ $message }}
-                    </p>
-                @enderror
+        {{-- NAMA KATEGORI --}}
 
-            </div>
+        <div style="margin-bottom:20px;">
 
+            <label
+                for="nama_kategori"
+                style="display:block; margin-bottom:7px;"
+            >
+                <strong>Nama Kategori</strong>
+            </label>
+
+            <input
+                type="text"
+                id="nama_kategori"
+                name="nama_kategori"
+                value="{{ old('nama_kategori') }}"
+                required
+                placeholder="Contoh: Infrastruktur & Jalan"
+                style="
+                    width:100%;
+                    padding:12px;
+                    border:1px solid #d1d5db;
+                    border-radius:8px;
+                    font-size:14px;
+                "
+            >
+
+            @error('nama_kategori')
+
+                <p style="color:#dc2626; margin-top:5px;">
+                    {{ $message }}
+                </p>
+
+            @enderror
+
+        </div>
+
+
+        {{-- KETERANGAN --}}
+
+        <div style="margin-bottom:20px;">
+
+            <label
+                for="keterangan"
+                style="display:block; margin-bottom:7px;"
+            >
+                <strong>Keterangan</strong>
+            </label>
+
+            <textarea
+                id="keterangan"
+                name="keterangan"
+                rows="4"
+                placeholder="Masukkan keterangan kategori..."
+                style="
+                    width:100%;
+                    padding:12px;
+                    border:1px solid #d1d5db;
+                    border-radius:8px;
+                    font-size:14px;
+                    resize:vertical;
+                "
+            >{{ old('keterangan') }}</textarea>
+
+            @error('keterangan')
+
+                <p style="color:#dc2626; margin-top:5px;">
+                    {{ $message }}
+                </p>
+
+            @enderror
+
+        </div>
+
+
+        {{-- TOMBOL --}}
+
+        <div style="display:flex; gap:10px;">
 
             <a
                 href="{{ route('admin.kategori.index') }}"
                 class="btn"
-                style="background:#6b7280;color:white;"
+                style="
+                    background:#6b7280;
+                    color:white;
+                "
             >
                 Batal
             </a>
@@ -79,11 +121,13 @@
                 type="submit"
                 class="btn btn-primary"
             >
-                Simpan
+                Simpan Kategori
             </button>
 
-        </form>
+        </div>
 
-    </div>
+    </form>
+
+</div>
 
 @endsection

@@ -6,8 +6,7 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <div>
-            <h1 style="margin: 0;">Pengajuan Masyarakat</h1>
-            <p style="color: #6b7280;">
+                <p style="color: #6b7280;">
                 Daftar seluruh pengajuan dari masyarakat.
             </p>
         </div>

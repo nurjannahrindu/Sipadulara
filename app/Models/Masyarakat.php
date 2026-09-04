@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Masyarakat extends Authenticatable
+class Masyarakat extends Model
 {
-    use Notifiable;
-
     protected $table = 'masyarakat';
 
     protected $primaryKey = 'id_masyarakat';
 
     protected $fillable = [
+        'user_id',
         'nama',
         'email',
         'password',
@@ -22,10 +21,10 @@ class Masyarakat extends Authenticatable
         'no_hp',
     ];
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
     public function pengajuans(): HasMany
     {

@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Masyarakat;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MasyarakatAuthController extends Controller
 {
@@ -22,23 +23,47 @@ class MasyarakatAuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nama' => 'required|string|max:255',
-            'email' => 'required|email|unique:masyarakat,email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
             'address' => 'nullable|string',
             'no_hp' => 'nullable|string|max:20',
         ]);
 
-        $masyarakat = Masyarakat::create([
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'address' => $request->address,
-            'no_hp' => $request->no_hp,
-        ]);
+        // Cegah email yang sudah terdaftar di tabel masyarakat
+        if (Masyarakat::where('email', $validated['email'])->exists()) {
+            return back()
+                ->withErrors([
+                    'email' => 'Email tersebut sudah terdaftar sebagai masyarakat.',
+                ])
+                ->withInput($request->except('password', 'password_confirmation'));
+        }
 
-        Auth::guard('masyarakat')->login($masyarakat);
+        $user = DB::transaction(function () use ($validated) {
+
+            // Buat akun utama di users
+            $user = User::create([
+                'name' => $validated['nama'],
+                'email' => $validated['email'],
+                'password' => $validated['password'],
+                'role' => 'masyarakat',
+            ]);
+
+            // Buat profil masyarakat
+            Masyarakat::create([
+                'user_id' => $user->id,
+                'nama' => $validated['nama'],
+                'email' => $validated['email'],
+                'password' => $user->password,
+                'address' => $validated['address'] ?? null,
+                'no_hp' => $validated['no_hp'] ?? null,
+            ]);
+
+            return $user;
+        });
+
+        Auth::login($user);
 
         $request->session()->regenerate();
 
@@ -52,24 +77,40 @@ class MasyarakatAuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::guard('masyarakat')->attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
+
             $request->session()->regenerate();
+
+            $user = Auth::user();
+
+            if ($user->role !== 'masyarakat') {
+
+                Auth::logout();
+
+                return back()
+                    ->withErrors([
+                        'email' => 'Akun ini bukan akun masyarakat.',
+                    ])
+                    ->onlyInput('email');
+            }
 
             return redirect()->route('masyarakat.dashboard');
         }
 
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+        return back()
+            ->withErrors([
+                'email' => 'Email atau password salah.',
+            ])
+            ->onlyInput('email');
     }
 
     public function logout(Request $request)
     {
-        Auth::guard('masyarakat')->logout();
+        Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('masyarakat.login');
+        return redirect()->route('login');
     }
 }

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Register - SIPADULARA</title>
+    <title>Login - SIPADULARA</title>
 
     <style>
 
@@ -23,42 +23,44 @@
             background:
                 linear-gradient(
                     135deg,
-                     #67a0eb 0%,
-                     #3d6186 50%,
-                     #5b6dad 100%
+                    #0b1930 0%,
+                    #102744 50%,
+                    #1e3a6d 100%
                 );
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            padding: 30px 20px;
+            padding: 20px;
         }
 
-        .register-wrapper {
+        /* ================= WRAPPER ================= */
+
+        .login-wrapper {
             width: 100%;
-            max-width: 520px;
+            max-width: 430px;
         }
 
-        .register-card {
-            background: #a3c7e0;
+        /* ================= CARD ================= */
 
-            border: 1px solid #e2e8f0;
+        .login-card {
+            background: #17263d;
+
+            border: 1px solid #304766;
 
             border-radius: 20px;
 
             padding: 38px;
 
             box-shadow:
-                0 20px 45px rgba(15, 23, 42, .10);
+                0 20px 45px rgba(0, 0, 0, 0.35);
         }
-
 
         /* ================= LOGO ================= */
 
         .logo {
             text-align: center;
-
             margin-bottom: 30px;
         }
 
@@ -70,108 +72,109 @@
 
             border-radius: 16px;
 
-            background: #2563eb;
+            background: #dbeafe;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            box-shadow:
-                0 8px 20px rgba(37, 99, 235, .25);
-
             position: relative;
+
+            box-shadow:
+                0 8px 20px rgba(37, 99, 235, 0.25);
         }
 
-        /*
-        Logo SIPADULARA:
-        bentuk sederhana seperti simbol perlindungan
-        menggunakan CSS, tanpa emoji.
-        */
-
-        .logo-icon::before {
-            content: "";
-
+        .shield {
             width: 25px;
             height: 29px;
 
-            border: 3px solid #ffffff;
+            background: #2563eb;
 
-            border-radius: 6px 6px 12px 12px;
-
-            transform: rotate(0deg);
+            clip-path: polygon(
+                50% 0%,
+                92% 16%,
+                88% 58%,
+                72% 82%,
+                50% 100%,
+                28% 82%,
+                12% 58%,
+                8% 16%
+            );
 
             position: relative;
         }
 
-        .logo-icon::after {
+        .shield::after {
             content: "";
-
-            width: 9px;
-            height: 15px;
-
-            border-right: 3px solid #ffffff;
-            border-bottom: 3px solid #ffffff;
 
             position: absolute;
 
-            top: 20px;
-            left: 27px;
+            width: 7px;
+            height: 12px;
 
-            transform:
-                rotate(45deg)
-                translate(-2px, -2px);
+            left: 9px;
+            top: 7px;
+
+            border-right: 2px solid white;
+            border-bottom: 2px solid white;
+
+            transform: rotate(45deg);
         }
 
         .logo h1 {
             margin: 0;
 
-            color: #0f172a;
+            color: #f8fafc;
 
             font-size: 26px;
 
-            font-weight: 700;
+            font-weight: 800;
+
+            letter-spacing: -0.4px;
         }
 
         .logo p {
             margin: 7px 0 0;
 
-            color: #64748b;
+            color: #94a3b8;
 
             font-size: 13px;
         }
-
 
         /* ================= TITLE ================= */
 
-        .register-title {
+        .login-title {
             margin-bottom: 22px;
         }
 
-        .register-title h2 {
+        .login-title h2 {
             margin: 0 0 6px;
 
-            color: #0f172a;
+            color: #f8fafc;
 
             font-size: 21px;
+
+            font-weight: 700;
         }
 
-        .register-title p {
+        .login-title p {
             margin: 0;
 
-            color: #64748b;
+            color: #94a3b8;
 
             font-size: 13px;
-        }
 
+            line-height: 1.5;
+        }
 
         /* ================= ERROR ================= */
 
         .alert {
-            background: #fef2f2;
+            background: #3a1f28;
 
-            border: 1px solid #fecaca;
+            border: 1px solid #7f3345;
 
-            color: #991b1b;
+            color: #fda4af;
 
             border-radius: 10px;
 
@@ -186,11 +189,10 @@
             margin: 4px 0;
         }
 
-
         /* ================= FORM ================= */
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         .form-group label {
@@ -198,50 +200,45 @@
 
             margin-bottom: 7px;
 
-            color: #334155;
+            color: #dbeafe;
 
             font-size: 13px;
 
             font-weight: 600;
         }
 
-        .form-group input,
-        .form-group textarea {
+        .form-group input {
             width: 100%;
 
             padding: 12px 14px;
 
-            border: 1px solid #cbd5e1;
+            border: 1px solid #405775;
 
             border-radius: 10px;
 
             outline: none;
 
-            background: #ffffff;
+            background: #22344d;
 
-            color: #334155;
+            color: #f8fafc;
 
             font-family: inherit;
 
             font-size: 14px;
 
-            transition: .2s;
+            transition: 0.2s;
         }
 
-        .form-group textarea {
-            min-height: 85px;
-
-            resize: vertical;
+        .form-group input::placeholder {
+            color: #8fa2bb;
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
-            border-color: #2563eb;
+        .form-group input:focus {
+            border-color: #3b82f6;
 
             box-shadow:
-                0 0 0 3px rgba(37, 99, 235, .12);
+                0 0 0 3px rgba(59, 130, 246, 0.18);
         }
-
 
         /* ================= PASSWORD ================= */
 
@@ -256,13 +253,13 @@
         .show-password {
             position: absolute;
 
-            right: 10px;
+            right: 12px;
             top: 50%;
 
             transform: translateY(-50%);
 
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
 
             display: flex;
             align-items: center;
@@ -276,13 +273,13 @@
 
             padding: 0;
 
-            color: #64748b;
+            color: #94a3b8;
 
-            transition: .2s;
+            transition: 0.2s;
         }
 
         .show-password:hover {
-            color: #2563eb;
+            color: #60a5fa;
         }
 
         .show-password svg {
@@ -290,10 +287,9 @@
             height: 20px;
         }
 
-
         /* ================= BUTTON ================= */
 
-        .register-button {
+        .login-button {
             width: 100%;
 
             padding: 13px;
@@ -312,45 +308,41 @@
 
             cursor: pointer;
 
-            transition: .2s;
-
-            margin-top: 5px;
+            transition: 0.2s;
         }
 
-        .register-button:hover {
-            background: #1d4ed8;
+        .login-button:hover {
+            background: #3b82f6;
 
             transform: translateY(-1px);
 
             box-shadow:
-                0 6px 15px rgba(37, 99, 235, .20);
+                0 6px 15px rgba(37, 99, 235, 0.30);
         }
 
+        /* ================= REGISTER ================= */
 
-        /* ================= LOGIN LINK ================= */
-
-        .login-link {
+        .register-link {
             text-align: center;
 
             margin-top: 21px;
 
-            color: #64748b;
+            color: #94a3b8;
 
             font-size: 13px;
         }
 
-        .login-link a {
-            color: #2563eb;
+        .register-link a {
+            color: #60a5fa;
 
             font-weight: 600;
 
             text-decoration: none;
         }
 
-        .login-link a:hover {
+        .register-link a:hover {
             text-decoration: underline;
         }
-
 
         /* ================= FOOTER ================= */
 
@@ -359,41 +351,41 @@
 
             margin-top: 20px;
 
-            color: #94a3b8;
+            color: #8193ad;
 
             font-size: 11px;
         }
 
-
         /* ================= RESPONSIVE ================= */
 
-        @media (max-width: 550px) {
+        @media (max-width: 500px) {
 
-            .register-card {
+            .login-card {
                 padding: 28px 22px;
             }
 
         }
 
     </style>
-
 </head>
 
 
 <body>
 
+<div class="login-wrapper">
 
-<div class="register-wrapper">
-
-
-    <div class="register-card">
+    <div class="login-card">
 
 
         {{-- ================= LOGO ================= --}}
 
         <div class="logo">
 
-            <div class="logo-icon"></div>
+            <div class="logo-icon">
+
+                <div class="shield"></div>
+
+            </div>
 
             <h1>
                 SIPADULARA
@@ -406,16 +398,16 @@
         </div>
 
 
-        {{-- ================= TITLE ================= --}}
+        {{-- ================= JUDUL ================= --}}
 
-        <div class="register-title">
+        <div class="login-title">
 
             <h2>
-                Daftar Akun Masyarakat
+                Selamat Datang
             </h2>
 
             <p>
-                Buat akun untuk menyampaikan pengaduan kepada pemerintah.
+                Silakan masuk untuk melanjutkan ke SIPADULARA.
             </p>
 
         </div>
@@ -440,35 +432,14 @@
         @endif
 
 
-        {{-- ================= FORM ================= --}}
+        {{-- ================= FORM LOGIN ================= --}}
 
         <form
-            action="{{ route('masyarakat.register.submit') }}"
+            action="{{ route('login.submit') }}"
             method="POST"
         >
 
             @csrf
-
-
-            {{-- NAMA --}}
-
-            <div class="form-group">
-
-                <label for="nama">
-                    Nama Lengkap
-                </label>
-
-                <input
-                    id="nama"
-                    type="text"
-                    name="nama"
-                    value="{{ old('nama') }}"
-                    placeholder="Masukkan nama lengkap"
-                    autocomplete="name"
-                    required
-                >
-
-            </div>
 
 
             {{-- EMAIL --}}
@@ -484,46 +455,9 @@
                     type="email"
                     name="email"
                     value="{{ old('email') }}"
-                    placeholder="contoh@email.com"
+                    placeholder="Masukkan email"
                     autocomplete="email"
                     required
-                >
-
-            </div>
-
-
-            {{-- ALAMAT --}}
-
-            <div class="form-group">
-
-                <label for="address">
-                    Alamat
-                </label>
-
-                <textarea
-                    id="address"
-                    name="address"
-                    placeholder="Masukkan alamat lengkap"
-                >{{ old('address') }}</textarea>
-
-            </div>
-
-
-            {{-- NO HP --}}
-
-            <div class="form-group">
-
-                <label for="no_hp">
-                    No. HP
-                </label>
-
-                <input
-                    id="no_hp"
-                    type="text"
-                    name="no_hp"
-                    value="{{ old('no_hp') }}"
-                    placeholder="Contoh: 081234567890"
-                    autocomplete="tel"
                 >
 
             </div>
@@ -543,22 +477,24 @@
                         id="password"
                         type="password"
                         name="password"
-                        placeholder="Buat password"
-                        autocomplete="new-password"
+                        placeholder="Masukkan password"
+                        autocomplete="current-password"
                         required
                     >
+
 
                     <button
                         type="button"
                         class="show-password"
-                        onclick="togglePassword('password', 'eye-off-password', 'eye-password', this)"
+                        onclick="togglePassword()"
+                        id="togglePasswordButton"
                         aria-label="Tampilkan password"
                     >
 
                         {{-- MATA DICORET --}}
 
                         <svg
-                            id="eye-off-password"
+                            id="eye-off"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             fill="none"
@@ -582,7 +518,7 @@
                         {{-- MATA BIASA --}}
 
                         <svg
-                            id="eye-password"
+                            id="eye"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             fill="none"
@@ -590,12 +526,16 @@
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            style="display:none;"
+                            style="display: none;"
                         >
 
                             <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12Z"></path>
 
-                            <circle cx="12" cy="12" r="3"></circle>
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="3"
+                            ></circle>
 
                         </svg>
 
@@ -606,103 +546,26 @@
             </div>
 
 
-            {{-- KONFIRMASI PASSWORD --}}
-
-            <div class="form-group">
-
-                <label for="password_confirmation">
-                    Konfirmasi Password
-                </label>
-
-                <div class="password-wrapper">
-
-                    <input
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        placeholder="Ulangi password"
-                        autocomplete="new-password"
-                        required
-                    >
-
-                    <button
-                        type="button"
-                        class="show-password"
-                        onclick="togglePassword('password_confirmation', 'eye-off-confirmation', 'eye-confirmation', this)"
-                        aria-label="Tampilkan password"
-                    >
-
-                        {{-- MATA DICORET --}}
-
-                        <svg
-                            id="eye-off-confirmation"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-
-                            <path d="M3 3l18 18"></path>
-
-                            <path d="M10.58 10.58a2 2 0 0 0 2.83 2.83"></path>
-
-                            <path d="M9.88 4.24A9.77 9.77 0 0 1 12 4c7 0 10 8 10 8a17.94 17.94 0 0 1-3.17 4.36"></path>
-
-                            <path d="M6.61 6.61C3.93 8.35 2 12 2 12s3 8 10 8a9.8 9.8 0 0 1 3.18-.53"></path>
-
-                        </svg>
-
-
-                        {{-- MATA BIASA --}}
-
-                        <svg
-                            id="eye-confirmation"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            style="display:none;"
-                        >
-
-                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12Z"></path>
-
-                            <circle cx="12" cy="12" r="3"></circle>
-
-                        </svg>
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            {{-- DAFTAR --}}
+            {{-- ================= LOGIN ================= --}}
 
             <button
                 type="submit"
-                class="register-button"
+                class="login-button"
             >
-                Daftar Akun
+                Login
             </button>
 
         </form>
 
 
-        {{-- LOGIN --}}
+        {{-- ================= REGISTER ================= --}}
 
-        <div class="login-link">
+        <div class="register-link">
 
-            Sudah punya akun?
+            Belum punya akun?
 
-            <a href="{{ route('login') }}">
-                Login sekarang
+            <a href="{{ route('masyarakat.register') }}">
+                Daftar sekarang
             </a>
 
         </div>
@@ -711,33 +574,34 @@
     </div>
 
 
+    {{-- ================= FOOTER ================= --}}
+
     <div class="footer">
 
         © {{ date('Y') }} SIPADULARA
 
     </div>
 
-
 </div>
 
 
+{{-- ================= JAVASCRIPT ================= --}}
+
 <script>
 
-function togglePassword(
-    inputId,
-    eyeOffId,
-    eyeId,
-    button
-) {
-
+function togglePassword()
+{
     const password =
-        document.getElementById(inputId);
+        document.getElementById('password');
 
     const eyeOff =
-        document.getElementById(eyeOffId);
+        document.getElementById('eye-off');
 
     const eye =
-        document.getElementById(eyeId);
+        document.getElementById('eye');
+
+    const button =
+        document.getElementById('togglePasswordButton');
 
 
     if (password.type === 'password') {
@@ -767,11 +631,11 @@ function togglePassword(
         );
 
     }
-
 }
 
 </script>
 
 
 </body>
+
 </html>

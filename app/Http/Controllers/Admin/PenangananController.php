@@ -46,7 +46,19 @@ class PenangananController extends Controller
             'gambar.max' => 'Ukuran gambar maksimal 2 MB.',
         ]);
 
-        $validated['id_admin'] = Auth::guard('admin')->id();
+        $user = Auth::user();
+
+        if (!$user || $user->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki akses sebagai admin.');
+        }
+
+        $admin = \App\Models\Admin::where('email', $user->email)->first();
+
+        if (!$admin) {
+            abort(403, 'Data admin belum terhubung dengan akun pengguna.');
+        }
+
+        $validated['id_admin'] = $admin->id_admin;
         $validated['id_pengajuan'] = $pengajuan->id_pengajuan;
 
         if ($request->hasFile('gambar')) {

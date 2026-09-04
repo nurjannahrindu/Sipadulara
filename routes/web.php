@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\MasyarakatAuthController;
 use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\LandingController;
 
 use App\Http\Controllers\Masyarakat\DashboardController as MasyarakatDashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -12,47 +14,76 @@ use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\PenangananController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Masyarakat\PengajuanController;
+
+
 /*
 |--------------------------------------------------------------------------
-| MASYARAKAT - AUTHENTICATION
+| LANDING PAGE
 |--------------------------------------------------------------------------
 */
 
-// Login
-Route::get('/login', [MasyarakatAuthController::class, 'showLogin'])
-    ->name('masyarakat.login');
+Route::get('/', [LandingController::class, 'index'])
+    ->name('landing');
 
-Route::post('/login', [MasyarakatAuthController::class, 'login'])
-    ->name('masyarakat.login.submit');
+/*
+|--------------------------------------------------------------------------
+| LOGIN GABUNGAN
+|--------------------------------------------------------------------------
+*/
 
-// Register
+Route::get('/login', [LoginController::class, 'showLogin'])
+    ->name('login');
+
+Route::post('/login', [LoginController::class, 'login'])
+    ->name('login.submit');
+
+
+/*
+|--------------------------------------------------------------------------
+| LOGIN ADMIN LAMA
+|--------------------------------------------------------------------------
+|
+| URL /admin/login tetap diarahkan ke halaman login yang sama.
+|
+*/
+
+Route::get('/admin/login', function () {
+    return redirect()->route('login');
+})->name('admin.login');
+
+
+/*
+|--------------------------------------------------------------------------
+| REGISTER MASYARAKAT
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/register', [MasyarakatAuthController::class, 'showRegister'])
     ->name('masyarakat.register');
 
 Route::post('/register', [MasyarakatAuthController::class, 'register'])
     ->name('masyarakat.register.submit');
 
-// Logout
+
+/*
+|--------------------------------------------------------------------------
+| LOGOUT MASYARAKAT
+|--------------------------------------------------------------------------
+*/
+
 Route::post('/logout', [MasyarakatAuthController::class, 'logout'])
     ->name('masyarakat.logout');
 
 
 /*
 |--------------------------------------------------------------------------
-| ADMIN - AUTHENTICATION
+| LOGOUT ADMIN
 |--------------------------------------------------------------------------
 */
 
-// Login Admin
-Route::get('/admin/login', [AdminAuthController::class, 'showLogin'])
-    ->name('admin.login');
-
-Route::post('/admin/login', [AdminAuthController::class, 'login'])
-    ->name('admin.login.submit');
-
-// Logout Admin
 Route::post('/admin/logout', [AdminAuthController::class, 'logout'])
     ->name('admin.logout');
+
 
 
 /*

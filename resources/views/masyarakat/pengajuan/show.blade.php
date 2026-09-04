@@ -1,55 +1,50 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.masyarakat')
 
-<head>
+@section('title', 'Detail Pengajuan - SIPADULARA')
 
-    <meta charset="UTF-8">
+@section('styles')
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Detail Pengajuan - SIPADULARA</title>
-
-
-    {{-- Leaflet CSS --}}
     <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     >
 
-
     <style>
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 30px;
-            background: #f5f5f5;
+        /* CSS KHUSUS DETAIL PENGAJUAN SAJA */
+        
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
-        .container {
-            max-width: 900px;
-            margin: auto;
+        .detail-item {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 12px;
         }
 
-        .card {
-            background: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        .detail-item.full {
+            grid-column: 1 / -1;
         }
 
-        .back {
-            display: inline-block;
-            margin-bottom: 20px;
+        .label {
+            display: block;
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .value {
+            font-size: 17px;
+            line-height: 1.5;
         }
 
         .status {
             display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
+            padding: 7px 14px;
+            border-radius: 9px;
             font-weight: bold;
         }
 
@@ -81,217 +76,276 @@
         #map {
             height: 400px;
             width: 100%;
+            border-radius: 14px;
             margin-top: 15px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+            border: 1px solid #e5e7eb;
         }
 
         .gambar {
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
-            border-radius: 8px;
+            border-radius: 14px;
             margin-top: 10px;
+            display: block;
         }
 
         .riwayat {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 22px;
             margin-bottom: 15px;
+            background: #fafafa;
         }
 
+        .riwayat:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 750px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-item.full {
+                grid-column: auto;
+            }
+        }
     </style>
 
-</head>
+@endsection
 
 
-<body>
+@section('content')
 
-<div class="container">
+    {{-- HEADER HALAMAN --}}
+
+    <div class="page-header">
+
+        <div>
+
+            <h1 class="page-title">
+                Detail Pengajuan
+            </h1>
+
+            <p class="page-description">
+                Informasi lengkap mengenai pengajuan kamu.
+            </p>
+
+        </div>
+
+        <a
+            href="{{ route('masyarakat.pengajuan.index') }}"
+            class="btn btn-secondary"
+        >
+            ← Kembali
+        </a>
+
+    </div>
 
 
-    {{-- PESAN SUCCESS --}}
+    {{-- SUCCESS --}}
+
     @if (session('success'))
 
-        <div class="card">
-
-            <strong>
-                {{ session('success') }}
-            </strong>
-
+        <div class="alert alert-success">
+            ✓ {{ session('success') }}
         </div>
 
     @endif
 
 
-    {{-- PESAN ERROR --}}
+    {{-- ERROR --}}
+
     @if (session('error'))
 
-        <div class="card">
-
-            <strong>
-                {{ session('error') }}
-            </strong>
-
+        <div class="alert alert-error">
+            ⚠ {{ session('error') }}
         </div>
 
     @endif
 
 
-    {{-- JUDUL --}}
-    <h1>
-        Detail Pengajuan
-    </h1>
-
-
-    {{-- KEMBALI --}}
-    <a
-        class="back"
-        href="{{ route('masyarakat.pengajuan.index') }}"
-    >
-        ← Kembali ke Pengajuan Saya
-    </a>
-
-
-    {{-- ============================= --}}
-    {{-- DATA PENGAJUAN --}}
-    {{-- ============================= --}}
+    {{-- =====================================================
+         DATA PENGAJUAN
+         ISINYA TETAP PUNYA KAMU
+    ====================================================== --}}
 
     <div class="card">
 
         <h2>
-            Data Pengajuan
+             Data Pengajuan
         </h2>
 
+        <div class="detail-grid">
 
-        <p>
+            {{-- Kategori --}}
+            <div class="detail-item">
 
-            <strong>Kategori:</strong><br>
+                <span class="label">
+                    Kategori
+                </span>
 
-            {{ $pengajuan->kategori->nama_kategori }}
+                <div class="value">
+                    {{ $pengajuan->kategori->nama_kategori ?? '-' }}
+                </div>
 
-        </p>
-
-
-        <p>
-
-            <strong>Judul:</strong><br>
-
-            {{ $pengajuan->judul }}
-
-        </p>
+            </div>
 
 
-        <p>
+            {{-- Tanggal --}}
+            <div class="detail-item">
 
-            <strong>Keterangan:</strong><br>
+                <span class="label">
+                    Tanggal Pengajuan
+                </span>
 
-            {{ $pengajuan->keterangan }}
+                <div class="value">
+                    {{ $pengajuan->tanggal->format('d-m-Y') }}
+                </div>
 
-        </p>
-
-
-        {{-- LOKASI --}}
-        <p>
-
-            <strong>Lokasi:</strong><br>
-
-            {{ $pengajuan->lokasi }}
-
-        </p>
+            </div>
 
 
-        {{-- ============================= --}}
-        {{-- MAPS --}}
-        {{-- ============================= --}}
+            {{-- Judul --}}
+            <div class="detail-item full">
 
-        @if (str_contains($pengajuan->lokasi, 'Latitude:'))
+                <span class="label">
+                    Judul
+                </span>
 
-            <strong>
-                Lokasi pada Peta:
-            </strong>
+                <div class="value">
+                    {{ $pengajuan->judul }}
+                </div>
 
-            <div id="map"></div>
+            </div>
+
+
+            {{-- Keterangan --}}
+            <div class="detail-item full">
+
+                <span class="label">
+                    Keterangan
+                </span>
+
+                <div class="value">
+                    {{ $pengajuan->keterangan ?: '-' }}
+                </div>
+
+            </div>
+
+
+            {{-- Lokasi --}}
+            <div class="detail-item full">
+
+                <span class="label">
+                    Lokasi
+                </span>
+
+                <div class="value">
+                    {{ $pengajuan->lokasi ?: '-' }}
+                </div>
+
+            </div>
+
+
+            {{-- Status --}}
+            <div class="detail-item">
+
+                <span class="label">
+                    Status Saat Ini
+                </span>
+
+                <div class="value">
+
+                    @if ($pengajuan->status === 'diajukan')
+
+                        <span class="status status-diajukan">
+                            Diajukan
+                        </span>
+
+                    @elseif ($pengajuan->status === 'diproses')
+
+                        <span class="status status-diproses">
+                            Diproses
+                        </span>
+
+                    @elseif ($pengajuan->status === 'ditangani')
+
+                        <span class="status status-ditangani">
+                            Ditangani
+                        </span>
+
+                    @elseif ($pengajuan->status === 'selesai')
+
+                        <span class="status status-selesai">
+                            Selesai
+                        </span>
+
+                    @elseif ($pengajuan->status === 'ditolak')
+
+                        <span class="status status-ditolak">
+                            Ditolak
+                        </span>
+
+                    @else
+
+                        <span class="status">
+                            {{ ucfirst($pengajuan->status) }}
+                        </span>
+
+                    @endif
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        {{-- GAMBAR --}}
+
+        @if ($pengajuan->gambar)
+
+            <div style="margin-top:25px;">
+
+                <span class="label">
+                    Gambar Pengajuan
+                </span>
+
+                <img
+                    class="gambar"
+                    src="{{ asset('storage/' . $pengajuan->gambar) }}"
+                    alt="Gambar Pengajuan"
+                >
+
+            </div>
 
         @endif
 
 
-        <p>
+        {{-- MAP --}}
 
-            <strong>Tanggal Pengajuan:</strong><br>
+        @if (str_contains($pengajuan->lokasi ?? '', 'Latitude:'))
 
-            {{ $pengajuan->tanggal->format('d-m-Y') }}
+            <div style="margin-top:25px;">
 
-        </p>
-
-
-        {{-- STATUS --}}
-        <p>
-
-            <strong>Status Saat Ini:</strong><br>
-
-
-            @if ($pengajuan->status === 'diajukan')
-
-                <span class="status status-diajukan">
-                    Diajukan
+                <span class="label">
+                    📍 Lokasi pada Peta
                 </span>
 
-            @elseif ($pengajuan->status === 'diproses')
+                <div id="map"></div>
 
-                <span class="status status-diproses">
-                    Diproses
-                </span>
-
-            @elseif ($pengajuan->status === 'ditangani')
-
-                <span class="status status-ditangani">
-                    Ditangani
-                </span>
-
-            @elseif ($pengajuan->status === 'selesai')
-
-                <span class="status status-selesai">
-                    Selesai
-                </span>
-
-            @elseif ($pengajuan->status === 'ditolak')
-
-                <span class="status status-ditolak">
-                    Ditolak
-                </span>
-
-            @endif
-
-        </p>
-
-
-        {{-- GAMBAR PENGAJUAN --}}
-        @if ($pengajuan->gambar)
-
-            <p>
-
-                <strong>
-                    Gambar Pengajuan:
-                </strong>
-
-            </p>
-
-
-            <img
-                class="gambar"
-                src="{{ asset('storage/' . $pengajuan->gambar) }}"
-                alt="Gambar Pengajuan"
-            >
+            </div>
 
         @endif
 
     </div>
 
 
-    {{-- ============================= --}}
-    {{-- RIWAYAT PENANGANAN --}}
-    {{-- ============================= --}}
+    {{-- =====================================================
+         RIWAYAT PENANGANAN
+         ISINYA TETAP PUNYA KAMU
+    ====================================================== --}}
 
     <div class="card">
 
@@ -299,24 +353,17 @@
             Riwayat Penanganan
         </h2>
 
-
         @if ($pengajuan->penanganans->count())
-
 
             @foreach ($pengajuan->penanganans as $penanganan)
 
                 <div class="riwayat">
 
+                    <div style="margin-bottom:15px;">
 
-                    {{-- STATUS --}}
-                    <p>
-
-                        <strong>
-                            Status:
-                        </strong>
-
-                        <br>
-
+                        <span class="label">
+                            Status
+                        </span>
 
                         @if ($penanganan->status === 'diproses')
 
@@ -342,148 +389,133 @@
                                 Ditolak
                             </span>
 
+                        @else
+
+                            <span class="status">
+                                {{ ucfirst($penanganan->status) }}
+                            </span>
+
                         @endif
 
-                    </p>
+                    </div>
 
 
-                    {{-- TANGGAL --}}
-                    <p>
+                    <div style="margin-bottom:15px;">
 
-                        <strong>
-                            Tanggal Penanganan:
-                        </strong>
+                        <span class="label">
+                            Tanggal Penanganan
+                        </span>
 
-                        <br>
+                        <div class="value">
+                            {{ $penanganan->tanggal_penanganan->format('d-m-Y') }}
+                        </div>
 
-                        {{ $penanganan->tanggal_penanganan->format('d-m-Y') }}
-
-                    </p>
-
-
-                    {{-- KETERANGAN --}}
-                    <p>
-
-                        <strong>
-                            Keterangan:
-                        </strong>
-
-                        <br>
-
-                        {{ $penanganan->keterangan ?? '-' }}
-
-                    </p>
+                    </div>
 
 
-                    {{-- FOTO PENANGANAN --}}
+                    <div style="margin-bottom:15px;">
+
+                        <span class="label">
+                            Keterangan
+                        </span>
+
+                        <div class="value">
+                            {{ $penanganan->keterangan ?: '-' }}
+                        </div>
+
+                    </div>
+
+
                     @if ($penanganan->gambar)
 
-                        <p>
+                        <div>
 
-                            <strong>
-                                Foto Penanganan:
-                            </strong>
+                            <span class="label">
+                                Foto Penanganan
+                            </span>
 
-                        </p>
+                            <img
+                                class="gambar"
+                                src="{{ asset('storage/' . $penanganan->gambar) }}"
+                                alt="Foto Penanganan"
+                            >
 
-
-                        <img
-                            class="gambar"
-                            src="{{ asset('storage/' . $penanganan->gambar) }}"
-                            alt="Foto Penanganan"
-                        >
+                        </div>
 
                     @endif
-
 
                 </div>
 
             @endforeach
 
-
         @else
 
-            <p>
+            <div
+                style="
+                    padding:25px;
+                    background:#f8fafc;
+                    border-radius:12px;
+                    color:#64748b;
+                "
+            >
                 Belum ada penanganan dari admin.
-            </p>
+            </div>
 
         @endif
 
     </div>
 
-</div>
+@endsection
 
 
-{{-- ============================= --}}
-{{-- LEAFLET JAVASCRIPT --}}
-{{-- ============================= --}}
+@section('scripts')
 
-@if (str_contains($pengajuan->lokasi, 'Latitude:'))
+    @if (str_contains($pengajuan->lokasi ?? '', 'Latitude:'))
 
-    <script
-        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    ></script>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+        <script>
 
-    <script>
+            const lokasi = @json($pengajuan->lokasi);
 
-        // Ambil lokasi dari database
-        const lokasi = @json($pengajuan->lokasi);
-
-
-        // Membaca Latitude dan Longitude
-        const match = lokasi.match(
-            /Latitude:\s*([-0-9.]+),\s*Longitude:\s*([-0-9.]+)/
-        );
-
-
-        if (match) {
-
-            const latitude = parseFloat(match[1]);
-
-            const longitude = parseFloat(match[2]);
-
-
-            // Membuat peta
-            const map = L.map('map').setView(
-                [latitude, longitude],
-                17
+            const match = lokasi.match(
+                /Latitude:\s*([-0-9.]+),\s*Longitude:\s*([-0-9.]+)/
             );
 
+            if (match) {
 
-            // OpenStreetMap
-            L.tileLayer(
-                'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                {
-                    maxZoom: 19,
+                const latitude = parseFloat(match[1]);
+                const longitude = parseFloat(match[2]);
 
-                    attribution:
-                        '&copy; OpenStreetMap contributors'
-                }
-            ).addTo(map);
+                const map = L.map('map').setView(
+                    [latitude, longitude],
+                    17
+                );
 
+                L.tileLayer(
+                    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    {
+                        maxZoom: 19,
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }
+                ).addTo(map);
 
-            // Marker lokasi pengaduan
-            L.marker([
-                latitude,
-                longitude
-            ])
-            .addTo(map)
+                L.marker([
+                    latitude,
+                    longitude
+                ])
+                .addTo(map)
+                .bindPopup(
+                    '<strong>Lokasi Pengaduan</strong><br>' +
+                    'Latitude: ' + latitude + '<br>' +
+                    'Longitude: ' + longitude
+                )
+                .openPopup();
 
-            .bindPopup(
-                '<strong>Lokasi Pengaduan</strong><br>' +
-                'Latitude: ' + latitude + '<br>' +
-                'Longitude: ' + longitude
-            )
+            }
 
-            .openPopup();
+        </script>
 
-        }
+    @endif
 
-    </script>
-
-@endif
-
-
-</body>
-</html>
+@endsection
