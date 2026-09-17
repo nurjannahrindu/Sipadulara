@@ -60,7 +60,7 @@
         display: grid;
 
         grid-template-columns:
-            repeat(6, minmax(0, 1fr));
+            repeat(5, minmax(0, 1fr));
 
         gap: 14px;
 
@@ -824,29 +824,6 @@
 
         </div>
 
-
-        {{-- DITANGANI --}}
-
-        <div class="stat-card">
-
-            <div class="stat-top">
-
-                <div class="stat-label">
-                    Ditangani
-                </div>
-            </div>
-
-            <div class="stat-number">
-                {{ $ditangani }}
-            </div>
-
-            <div class="stat-description">
-                Pengajuan sedang ditangani
-            </div>
-
-        </div>
-
-
         {{-- SELESAI --}}
 
         <div class="stat-card">
@@ -1067,31 +1044,6 @@
 
             </div>
 
-
-            {{-- DITANGANI --}}
-
-            <div class="percentage-card">
-
-                <div class="percentage-name">
-                    Ditangani
-                </div>
-
-                <div class="percentage-number">
-                    {{ $persenDitangani }}%
-                </div>
-
-                <div class="progress">
-
-                    <div
-                        class="progress-bar"
-                        style="width: {{ min($persenDitangani, 100) }}%"
-                    ></div>
-
-                </div>
-
-            </div>
-
-
             {{-- SELESAI --}}
 
             <div class="percentage-card">
@@ -1205,10 +1157,6 @@
                             </th>
 
                             <th>
-                                Ditangani
-                            </th>
-
-                            <th>
                                 Selesai
                             </th>
 
@@ -1273,15 +1221,6 @@
 
                                     <span class="percentage-text">
                                         {{ $arsip->persen_diproses }}%
-                                    </span>
-
-                                </td>
-
-
-                                <td>
-
-                                    <span class="percentage-text">
-                                        {{ $arsip->persen_ditangani }}%
                                     </span>
 
                                 </td>

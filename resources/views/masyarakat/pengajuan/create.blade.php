@@ -871,18 +871,37 @@
 
         <div class="form-actions">
 
+            {{-- TOMBOL KEMBALI --}}
             <a
                 href="{{ route('masyarakat.pengajuan.index') }}"
-                class="btn btn-secondary"
+                title="Kembali"
+                style="
+                    width: 48px;
+                    height: 48px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                    background: #1e3a8a;
+                    color: white;
+                    text-decoration: none;
+                    font-size: 32px;
+                    font-weight: 500;
+                    line-height: 1;
+                    box-shadow: 0 3px 8px rgba(0,0,0,.20);
+                    transition: all .2s ease;
+                    flex-shrink: 0;
+                "
             >
-                ← Kembali
+                ‹
             </a>
 
+            {{-- TOMBOL KIRIM --}}
             <button
                 type="submit"
                 class="btn btn-primary"
             >
-                📤 Kirim Pengajuan
+                Kirim Pengajuan
             </button>
 
         </div>

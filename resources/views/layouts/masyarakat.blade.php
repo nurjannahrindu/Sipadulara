@@ -681,9 +681,9 @@
             display: grid;
 
             grid-template-columns:
-                repeat(6, minmax(0, 1fr));
+                repeat(5, minmax(0, 1fr));
 
-            gap: 10px;
+            gap: 14px;
 
             margin-bottom: 25px;
         }

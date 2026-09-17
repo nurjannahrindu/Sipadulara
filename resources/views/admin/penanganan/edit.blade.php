@@ -80,13 +80,6 @@
                     </option>
 
                     <option
-                        value="ditangani"
-                        {{ old('status', $penanganan->status) === 'ditangani' ? 'selected' : '' }}
-                    >
-                        Ditangani
-                    </option>
-
-                    <option
                         value="selesai"
                         {{ old('status', $penanganan->status) === 'selesai' ? 'selected' : '' }}
                     >

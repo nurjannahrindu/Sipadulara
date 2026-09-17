@@ -24,7 +24,6 @@ class DashboardController extends Controller
         $totalPengajuan = (clone $query)->count();
         $diajukan = (clone $query)->where('status', 'diajukan')->count();
         $diproses = (clone $query)->where('status', 'diproses')->count();
-        $ditangani = (clone $query)->where('status', 'ditangani')->count();
         $selesai = (clone $query)->where('status', 'selesai')->count();
         $ditolak = (clone $query)->where('status', 'ditolak')->count();
 
@@ -34,7 +33,6 @@ class DashboardController extends Controller
             'totalPengajuan',
             'diajukan',
             'diproses',
-            'ditangani',
             'selesai',
             'ditolak'
         ));

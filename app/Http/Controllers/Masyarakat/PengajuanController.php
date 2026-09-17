@@ -35,30 +35,89 @@ class PengajuanController extends Controller
         return $masyarakat->id_masyarakat;
     }
 
+
     /**
-     * Menampilkan pengajuan milik masyarakat.
+     * ==========================================================
+     * MENAMPILKAN DAFTAR PENGAJUAN
+     * ==========================================================
+     *
+     * Maksimal 15 pengajuan ditampilkan dalam satu halaman.
+     *
+     * Jika jumlah data <= 15:
+     * - Tidak ada tombol pagination.
+     *
+     * Jika jumlah data > 15:
+     * - Muncul halaman 1, 2, 3, dst.
+     * - Muncul tombol Sebelumnya dan Berikutnya.
+     *
+     * Data kategori juga dikirim ke halaman index karena
+     * modal edit pengajuan berada di halaman index.
      */
     public function index()
     {
         $masyarakatId = $this->getMasyarakatId();
 
-        $pengajuans = Pengajuan::with('kategori')
-            ->where('id_masyarakat', $masyarakatId)
+        /*
+        |----------------------------------------------------------
+        | DATA PENGAJUAN
+        |----------------------------------------------------------
+        |
+        | 15 data per halaman.
+        |
+        */
+
+        $pengajuans = Pengajuan::with([
+                'kategori',
+            ])
+            ->where(
+                'id_masyarakat',
+                $masyarakatId
+            )
             ->latest()
-            ->get();
+            ->paginate(15);
+
+
+        /*
+        |----------------------------------------------------------
+        | DATA KATEGORI
+        |----------------------------------------------------------
+        |
+        | Dibutuhkan oleh modal:
+        | Edit Pengajuan
+        |
+        */
+
+        $kategoris = Kategori::orderBy(
+            'nama_kategori'
+        )->get();
+
+
+        /*
+        |----------------------------------------------------------
+        | KIRIM DATA KE VIEW
+        |----------------------------------------------------------
+        */
 
         return view(
             'masyarakat.pengajuan.index',
-            compact('pengajuans')
+            compact(
+                'pengajuans',
+                'kategoris'
+            )
         );
     }
 
+
     /**
-     * Form membuat pengajuan.
+     * ==========================================================
+     * FORM MEMBUAT PENGAJUAN
+     * ==========================================================
      */
     public function create()
     {
-        $kategoris = Kategori::orderBy('nama_kategori')->get();
+        $kategoris = Kategori::orderBy(
+            'nama_kategori'
+        )->get();
 
         return view(
             'masyarakat.pengajuan.create',
@@ -66,28 +125,41 @@ class PengajuanController extends Controller
         );
     }
 
+
     /**
-     * Menyimpan pengajuan.
+     * ==========================================================
+     * MENYIMPAN PENGAJUAN
+     * ==========================================================
      */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'id_kategori' => 'required|exists:kategori,id_kategori',
+            'id_kategori' =>
+                'required|exists:kategori,id_kategori',
 
-            'judul' => 'required|string|max:255',
+            'judul' =>
+                'required|string|max:255',
 
-            'keterangan' => 'required|string',
+            'keterangan' =>
+                'required|string',
 
-            'lokasi' => 'required|string|max:255',
+            'lokasi' =>
+                'required|string|max:255',
 
-            'latitude' => 'required|numeric|between:-90,90',
+            'latitude' =>
+                'required|numeric|between:-90,90',
 
-            'longitude' => 'required|numeric|between:-180,180',
+            'longitude' =>
+                'required|numeric|between:-180,180',
 
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'gambar' =>
+                'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
 
-            'tanggal' => 'required|date',
+            'tanggal' =>
+                'required|date',
+
         ], [
+
             'id_kategori.required' =>
                 'Kategori wajib dipilih.',
 
@@ -128,46 +200,57 @@ class PengajuanController extends Controller
                 'Tanggal wajib diisi.',
         ]);
 
+
         /*
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
         | ID MASYARAKAT
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
         */
 
-        $validated['id_masyarakat'] = $this->getMasyarakatId();
+        $validated['id_masyarakat'] =
+            $this->getMasyarakatId();
+
 
         /*
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
         | STATUS AWAL
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
         */
 
         $validated['status'] = 'diajukan';
 
+
         /*
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
         | SIMPAN GAMBAR
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
         */
 
         if ($request->hasFile('gambar')) {
-            $validated['gambar'] = $request
-                ->file('gambar')
-                ->store('pengajuan', 'public');
+
+            $validated['gambar'] =
+                $request
+                    ->file('gambar')
+                    ->store(
+                        'pengajuan',
+                        'public'
+                    );
         }
 
+
         /*
-        |--------------------------------------------------------------------------
-        | SIMPAN PENGAJUAN
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
+        | SIMPAN DATA
+        |----------------------------------------------------------
         */
 
         Pengajuan::create($validated);
 
+
         /*
-        |--------------------------------------------------------------------------
-        | REDIRECT
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
+        | KEMBALI KE INDEX
+        |----------------------------------------------------------
         */
 
         return redirect()
@@ -178,8 +261,11 @@ class PengajuanController extends Controller
             );
     }
 
+
     /**
-     * Menampilkan detail pengajuan.
+     * ==========================================================
+     * DETAIL PENGAJUAN
+     * ==========================================================
      */
     public function show(Pengajuan $pengajuan)
     {
@@ -196,35 +282,57 @@ class PengajuanController extends Controller
         );
     }
 
+
     /**
-     * Form edit pengajuan.
+     * ==========================================================
+     * EDIT PENGAJUAN
+     * ==========================================================
+     *
+     * METHOD INI TIDAK LAGI DIPAKAI UNTUK MEMBUKA HALAMAN EDIT
+     * JIKA EDIT SUDAH MENGGUNAKAN MODAL.
+     *
+     * Tetapi tetap disediakan supaya route edit tidak error.
      */
     public function edit(Pengajuan $pengajuan)
     {
         $this->authorizePengajuan($pengajuan);
 
         if ($pengajuan->status !== 'diajukan') {
+
             return redirect()
-                ->route('masyarakat.pengajuan.index')
+                ->route(
+                    'masyarakat.pengajuan.index'
+                )
                 ->with(
                     'error',
                     'Pengajuan yang sudah diproses tidak dapat diedit.'
                 );
         }
 
-        $kategoris = Kategori::orderBy('nama_kategori')->get();
+        /*
+        |----------------------------------------------------------
+        | Jika route edit masih dipanggil,
+        | arahkan kembali ke halaman index.
+        |----------------------------------------------------------
+        */
 
-        return view(
-            'masyarakat.pengajuan.edit',
-            compact(
-                'pengajuan',
-                'kategoris'
+        return redirect()
+            ->route(
+                'masyarakat.pengajuan.index'
             )
-        );
+            ->with(
+                'open_edit',
+                $pengajuan->id_pengajuan
+            );
     }
 
+
     /**
-     * Memperbarui pengajuan.
+     * ==========================================================
+     * UPDATE PENGAJUAN
+     * ==========================================================
+     *
+     * Form modal edit akan mengarah ke method ini.
      */
     public function update(
         Request $request,
@@ -232,16 +340,34 @@ class PengajuanController extends Controller
     ) {
         $this->authorizePengajuan($pengajuan);
 
+
+        /*
+        |----------------------------------------------------------
+        | CEK STATUS
+        |----------------------------------------------------------
+        */
+
         if ($pengajuan->status !== 'diajukan') {
+
             return redirect()
-                ->route('masyarakat.pengajuan.index')
+                ->route(
+                    'masyarakat.pengajuan.index'
+                )
                 ->with(
                     'error',
                     'Pengajuan yang sudah diproses tidak dapat diubah.'
                 );
         }
 
+
+        /*
+        |----------------------------------------------------------
+        | VALIDASI
+        |----------------------------------------------------------
+        */
+
         $validated = $request->validate([
+
             'id_kategori' =>
                 'required|exists:kategori,id_kategori',
 
@@ -265,95 +391,193 @@ class PengajuanController extends Controller
 
             'tanggal' =>
                 'required|date',
+
+        ], [
+
+            'id_kategori.required' =>
+                'Kategori wajib dipilih.',
+
+            'id_kategori.exists' =>
+                'Kategori tidak valid.',
+
+            'judul.required' =>
+                'Judul wajib diisi.',
+
+            'keterangan.required' =>
+                'Keterangan wajib diisi.',
+
+            'lokasi.required' =>
+                'Lokasi wajib diisi.',
+
+            'latitude.required' =>
+                'Titik lokasi pada peta wajib dipilih.',
+
+            'longitude.required' =>
+                'Titik lokasi pada peta wajib dipilih.',
+
+            'gambar.image' =>
+                'File harus berupa gambar.',
+
+            'gambar.mimes' =>
+                'Gambar harus JPG, JPEG, PNG, atau WEBP.',
+
+            'gambar.max' =>
+                'Ukuran gambar maksimal 5 MB.',
+
+            'tanggal.required' =>
+                'Tanggal wajib diisi.',
         ]);
 
+
         /*
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
         | GANTI GAMBAR
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
         */
 
         if ($request->hasFile('gambar')) {
 
+            /*
+            | Hapus gambar lama
+            */
+
             if ($pengajuan->gambar) {
+
                 Storage::disk('public')
-                    ->delete($pengajuan->gambar);
+                    ->delete(
+                        $pengajuan->gambar
+                    );
             }
 
-            $validated['gambar'] = $request
-                ->file('gambar')
-                ->store('pengajuan', 'public');
+
+            /*
+            | Simpan gambar baru
+            */
+
+            $validated['gambar'] =
+                $request
+                    ->file('gambar')
+                    ->store(
+                        'pengajuan',
+                        'public'
+                    );
         }
 
+
         /*
-        |--------------------------------------------------------------------------
-        | UPDATE
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
+        | UPDATE DATA
+        |----------------------------------------------------------
         */
 
         $pengajuan->update($validated);
 
+
+        /*
+        |----------------------------------------------------------
+        | KEMBALI KE INDEX
+        |----------------------------------------------------------
+        */
+
         return redirect()
-            ->route('masyarakat.pengajuan.index')
+            ->route(
+                'masyarakat.pengajuan.index'
+            )
             ->with(
                 'success',
                 'Pengajuan berhasil diperbarui.'
             );
     }
 
+
     /**
-     * Menghapus pengajuan.
+     * ==========================================================
+     * HAPUS PENGAJUAN
+     * ==========================================================
      */
     public function destroy(Pengajuan $pengajuan)
     {
         $this->authorizePengajuan($pengajuan);
 
+
+        /*
+        |----------------------------------------------------------
+        | CEK STATUS
+        |----------------------------------------------------------
+        */
+
         if ($pengajuan->status !== 'diajukan') {
+
             return redirect()
-                ->route('masyarakat.pengajuan.index')
+                ->route(
+                    'masyarakat.pengajuan.index'
+                )
                 ->with(
                     'error',
                     'Pengajuan yang sudah diproses tidak dapat dihapus.'
                 );
         }
 
+
         /*
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
         | HAPUS GAMBAR
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
         */
 
         if ($pengajuan->gambar) {
+
             Storage::disk('public')
-                ->delete($pengajuan->gambar);
+                ->delete(
+                    $pengajuan->gambar
+                );
         }
 
+
         /*
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
         | HAPUS DATA
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------
         */
 
         $pengajuan->delete();
 
+
+        /*
+        |----------------------------------------------------------
+        | KEMBALI KE INDEX
+        |----------------------------------------------------------
+        */
+
         return redirect()
-            ->route('masyarakat.pengajuan.index')
+            ->route(
+                'masyarakat.pengajuan.index'
+            )
             ->with(
                 'success',
                 'Pengajuan berhasil dihapus.'
             );
     }
 
+
     /**
-     * Memastikan pengajuan milik masyarakat yang login.
+     * ==========================================================
+     * CEK KEPEMILIKAN PENGAJUAN
+     * ==========================================================
      */
     private function authorizePengajuan(
         Pengajuan $pengajuan
     ): void {
 
-        $masyarakatId = $this->getMasyarakatId();
+        $masyarakatId =
+            $this->getMasyarakatId();
 
-        if ($pengajuan->id_masyarakat !== $masyarakatId) {
+
+        if (
+            $pengajuan->id_masyarakat
+            !== $masyarakatId
+        ) {
+
             abort(
                 403,
                 'Anda tidak memiliki akses ke pengajuan ini.'

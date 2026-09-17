@@ -83,10 +83,6 @@ class DashboardController extends Controller
             ->where('status', 'diproses')
             ->count();
 
-        $bulanDitangani = (clone $queryBulan)
-            ->where('status', 'ditangani')
-            ->count();
-
         $bulanSelesai = (clone $queryBulan)
             ->where('status', 'selesai')
             ->count();
@@ -109,11 +105,6 @@ class DashboardController extends Controller
         $persenDiproses = $totalBulan > 0
             ? round(($bulanDiproses / $totalBulan) * 100, 1)
             : 0;
-
-        $persenDitangani = $totalBulan > 0
-            ? round(($bulanDitangani / $totalBulan) * 100, 1)
-            : 0;
-
         $persenSelesai = $totalBulan > 0
             ? round(($bulanSelesai / $totalBulan) * 100, 1)
             : 0;
@@ -133,7 +124,6 @@ class DashboardController extends Controller
             'labels' => [
                 'Diajukan',
                 'Diproses',
-                'Ditangani',
                 'Selesai',
                 'Ditolak',
             ],
@@ -141,7 +131,6 @@ class DashboardController extends Controller
             'data' => [
                 $bulanDiajukan,
                 $bulanDiproses,
-                $bulanDitangani,
                 $bulanSelesai,
                 $bulanDitolak,
             ],
@@ -149,7 +138,6 @@ class DashboardController extends Controller
             'persentase' => [
                 $persenDiajukan,
                 $persenDiproses,
-                $persenDitangani,
                 $persenSelesai,
                 $persenDitolak,
             ],
@@ -196,11 +184,6 @@ class DashboardController extends Controller
                 ->where('status', 'diproses')
                 ->count();
 
-            $statusDitangani = Pengajuan::whereYear('tanggal', $arsip->tahun)
-                ->whereMonth('tanggal', $arsip->bulan)
-                ->where('status', 'ditangani')
-                ->count();
-
             $statusSelesai = Pengajuan::whereYear('tanggal', $arsip->tahun)
                 ->whereMonth('tanggal', $arsip->bulan)
                 ->where('status', 'selesai')
@@ -220,10 +203,6 @@ class DashboardController extends Controller
                 ? round(($statusDiproses / $total) * 100, 1)
                 : 0;
 
-            $arsip->persen_ditangani = $total > 0
-                ? round(($statusDitangani / $total) * 100, 1)
-                : 0;
-
             $arsip->persen_selesai = $total > 0
                 ? round(($statusSelesai / $total) * 100, 1)
                 : 0;
@@ -239,7 +218,6 @@ class DashboardController extends Controller
             'totalPengajuan',
             'diajukan',
             'diproses',
-            'ditangani',
             'selesai',
             'ditolak',
             'totalMasyarakat',
@@ -249,7 +227,6 @@ class DashboardController extends Controller
             'totalBulan',
             'persenDiajukan',
             'persenDiproses',
-            'persenDitangani',
             'persenSelesai',
             'persenDitolak',
             'grafik',

@@ -27,7 +27,7 @@
     <div class="stat-card">
 
         <div class="stat-title">
-             Total Pengajuan
+            Total Pengajuan
         </div>
 
         <div class="stat-number">
@@ -45,7 +45,7 @@
     <div class="stat-card">
 
         <div class="stat-title">
-             Diajukan
+            Diajukan
         </div>
 
         <div class="stat-number">
@@ -63,7 +63,7 @@
     <div class="stat-card">
 
         <div class="stat-title">
-             Diproses
+            Diproses
         </div>
 
         <div class="stat-number">
@@ -77,29 +77,11 @@
     </div>
 
 
-    {{-- DITANGANI --}}
-    <div class="stat-card">
-
-        <div class="stat-title">
-            Ditangani
-        </div>
-
-        <div class="stat-number">
-            {{ $ditangani }}
-        </div>
-
-        <div class="stat-description">
-            Pengajuan sedang ditangani
-        </div>
-
-    </div>
-
-
     {{-- SELESAI --}}
     <div class="stat-card">
 
         <div class="stat-title">
-             Selesai
+            Selesai
         </div>
 
         <div class="stat-number">
@@ -117,7 +99,7 @@
     <div class="stat-card">
 
         <div class="stat-title">
-             Ditolak
+            Ditolak
         </div>
 
         <div class="stat-number">
@@ -143,7 +125,7 @@
         Buat Pengaduan
     </h2>
 
-    <p style="color:#64748b;">
+    <p style="color:#64748b; line-height:1.7;">
         Jika kamu ingin menyampaikan pengaduan kepada pemerintah,
         silakan buat pengajuan baru melalui menu
         <strong>Pengajuan Saya</strong>.

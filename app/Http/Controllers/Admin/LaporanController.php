@@ -18,7 +18,7 @@ class LaporanController extends Controller
             'penanganans.admin',
         ])
         ->latest('tanggal')
-        ->get();
+        ->paginate(15);
 
         return view(
             'admin.laporan.index',
@@ -29,6 +29,8 @@ class LaporanController extends Controller
 
     /**
      * Menampilkan halaman khusus untuk cetak laporan
+     *
+     * Semua data tetap ditampilkan untuk kebutuhan cetak.
      */
     public function cetak()
     {

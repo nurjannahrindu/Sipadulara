@@ -205,21 +205,13 @@
 <body>
 
 
-    {{-- TOMBOL --}}
-
-    <a
-        href="{{ route('admin.laporan.index') }}"
-        class="btn-back"
-    >
-        ← Kembali
-    </a>
 
 
     <button
         onclick="window.print()"
         class="btn-print"
     >
-        🖨️ Cetak
+         Cetak
     </button>
 
 

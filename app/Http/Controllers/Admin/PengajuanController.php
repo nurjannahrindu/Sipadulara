@@ -17,7 +17,7 @@ class PengajuanController extends Controller
             'kategori'
         ])
         ->latest()
-        ->get();
+        ->paginate(15);
 
         return view('admin.pengajuan.index', compact('pengajuans'));
     }
