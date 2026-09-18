@@ -21,72 +21,49 @@
     ===================================================== */
 
     .dashboard-header {
-
         margin-bottom: 24px;
     }
 
 
     .dashboard-header h1 {
-
         margin: 0;
-
         color: #0f172a;
-
         font-size: 30px;
-
         font-weight: 800;
-
         letter-spacing: -.4px;
     }
 
 
     .dashboard-header p {
-
         margin: 8px 0 0;
-
         color: #64748b;
-
         font-size: 14px;
-
         line-height: 1.6;
     }
 
 
     /* =====================================================
-       STATISTIK
+       STATISTIK UTAMA
     ===================================================== */
+
     .stats-grid {
-
         display: grid;
-
-        grid-template-columns:
-            repeat(5, minmax(0, 1fr));
-
+        grid-template-columns: repeat(5, minmax(0, 1fr));
         gap: 14px;
-
         margin-bottom: 25px;
     }
 
 
     .stat-card {
-
         position: relative;
-
         overflow: hidden;
-
         min-height: 135px;
-
         background: #ffffff;
-
         border: 1px solid #e5eaf1;
-
         border-radius: 13px;
-
         padding: 17px;
-
         box-shadow:
             0 5px 18px rgba(15, 23, 42, .045);
-
         transition:
             transform .2s ease,
             box-shadow .2s ease;
@@ -94,158 +71,106 @@
 
 
     .stat-card:hover {
-
         transform: translateY(-3px);
-
         box-shadow:
             0 10px 25px rgba(15, 23, 42, .08);
     }
 
 
     .stat-card::after {
-
         content: "";
-
         position: absolute;
-
         right: -30px;
-
         bottom: -35px;
-
         width: 105px;
-
         height: 105px;
-
         border-radius: 50%;
-
         background: #eff6ff;
-
         opacity: .8;
     }
 
 
     .stat-top {
-
         position: relative;
-
         z-index: 2;
-
         display: flex;
-
         justify-content: space-between;
-
         align-items: center;
-
         margin-bottom: 14px;
     }
 
 
     .stat-icon {
-
         width: 46px;
-
         height: 46px;
-
         border-radius: 12px;
-
         display: flex;
-
         align-items: center;
-
         justify-content: center;
-
         font-size: 20px;
-
         flex-shrink: 0;
     }
 
 
     .icon-blue {
-
         background: #dbeafe;
-
         color: #2563eb;
     }
 
 
     .icon-yellow {
-
         background: #fef3c7;
-
         color: #d97706;
     }
 
 
     .icon-purple {
-
         background: #ede9fe;
-
         color: #7c3aed;
     }
 
 
     .icon-orange {
-
         background: #ffedd5;
-
         color: #ea580c;
     }
 
 
     .icon-green {
-
         background: #dcfce7;
-
         color: #16a34a;
     }
 
 
     .icon-red {
-
         background: #fee2e2;
-
         color: #dc2626;
     }
 
 
     .stat-label {
-
         color: #64748b;
-
         font-size: 13px;
-
         font-weight: 600;
     }
 
 
     .stat-number {
-
         position: relative;
-
         z-index: 2;
-
         color: #0f172a;
-
         font-size: 27px;
-
         font-weight: 800;
-
         line-height: 1;
     }
 
 
     .stat-description {
-
         position: relative;
-
         z-index: 2;
-
         margin-top: 9px;
-
         color: #94a3b8;
-
         font-size: 10px;
-
         line-height: 1.45;
     }
 
@@ -255,40 +180,27 @@
     ===================================================== */
 
     .dashboard-card {
-
         background: #ffffff;
-
         border: 1px solid #e5eaf1;
-
         border-radius: 13px;
-
         padding: 26px;
-
         margin-bottom: 24px;
-
         box-shadow:
             0 5px 18px rgba(15, 23, 42, .04);
     }
 
 
     .card-title {
-
         margin: 0;
-
         color: #0f172a;
-
         font-size: 20px;
-
         font-weight: 700;
     }
 
 
     .card-subtitle {
-
         margin: 6px 0 0;
-
         color: #64748b;
-
         font-size: 13px;
     }
 
@@ -298,89 +210,75 @@
     ===================================================== */
 
     .chart-header {
-
         display: flex;
-
         justify-content: space-between;
-
         align-items: flex-start;
-
         gap: 20px;
-
         margin-bottom: 25px;
     }
 
 
     .filter-form {
-
         display: flex;
-
         align-items: center;
-
         gap: 8px;
     }
 
 
     .filter-form select {
-
         height: 38px;
-
         padding: 0 12px;
-
         border: 1px solid #cbd5e1;
-
         border-radius: 9px;
-
         background: #ffffff;
-
         color: #334155;
-
         font-family: inherit;
-
         font-size: 13px;
-
         outline: none;
     }
 
 
     .filter-form select:focus {
-
         border-color: #2563eb;
-
         box-shadow:
             0 0 0 3px rgba(37, 99, 235, .10);
     }
 
 
     .filter-button {
-
         height: 38px;
-
         padding: 0 16px;
-
         border: none;
-
         border-radius: 9px;
-
         background: #2563eb;
-
         color: #ffffff;
-
         font-size: 13px;
-
         font-weight: 600;
-
         cursor: pointer;
-
         transition: .2s;
     }
 
 
     .filter-button:hover {
-
         background: #1d4ed8;
-
         transform: translateY(-1px);
+    }
+
+
+    /* =====================================================
+       AKSESIBILITAS
+    ===================================================== */
+
+    .visually-hidden {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
     }
 
 
@@ -389,11 +287,8 @@
     ===================================================== */
 
     .chart-box {
-
         width: 100%;
-
         height: 350px;
-
         position: relative;
     }
 
@@ -403,232 +298,156 @@
     ===================================================== */
 
     .percentage-title {
-
         margin-top: 28px;
-
         margin-bottom: 15px;
-
         color: #334155;
-
         font-size: 15px;
-
         font-weight: 700;
     }
 
 
     .percentage-grid {
-
         display: grid;
-
         grid-template-columns:
-            repeat(5, minmax(0, 1fr));
-
+            repeat(4, minmax(0, 1fr));
         gap: 12px;
     }
 
 
     .percentage-card {
-
         background: #f8fafc;
-
         border: 1px solid #e2e8f0;
-
-        border-radius: 12px;
-
+        border-radius: 11px;
         padding: 15px;
     }
 
 
     .percentage-name {
-
         color: #64748b;
-
         font-size: 12px;
-
-        margin-bottom: 7px;
+        font-weight: 600;
     }
 
 
     .percentage-number {
-
+        margin-top: 6px;
         color: #0f172a;
-
-        font-size: 20px;
-
-        font-weight: 700;
+        font-size: 22px;
+        font-weight: 800;
     }
 
 
     .progress {
-
-        height: 6px;
-
+        width: 100%;
+        height: 7px;
         margin-top: 10px;
-
         background: #e2e8f0;
-
         border-radius: 10px;
-
         overflow: hidden;
     }
 
 
     .progress-bar {
-
         height: 100%;
-
         background: #2563eb;
-
         border-radius: 10px;
-
-        transition: width .4s ease;
     }
 
 
     /* =====================================================
-       ARSIP
+       ARSIP BULANAN
     ===================================================== */
 
     .archive-header {
-
         display: flex;
-
         justify-content: space-between;
-
         align-items: center;
-
-        gap: 15px;
-
+        gap: 20px;
         margin-bottom: 20px;
     }
 
 
     .archive-count {
-
         background: #eff6ff;
-
         color: #2563eb;
-
-        padding: 7px 12px;
-
+        padding: 6px 11px;
         border-radius: 20px;
-
         font-size: 12px;
-
         font-weight: 600;
-
-        white-space: nowrap;
     }
 
 
     .archive-table-wrapper {
-
-        width: 100%;
-
         overflow-x: auto;
     }
 
 
     .archive-table {
-
         width: 100%;
-
-        min-width: 850px;
-
         border-collapse: collapse;
+        min-width: 850px;
     }
 
 
     .archive-table th {
-
         background: #f8fafc;
-
         color: #64748b;
-
         font-size: 12px;
-
         font-weight: 600;
-
         text-align: left;
-
         padding: 13px 14px;
-
         border-bottom: 1px solid #e2e8f0;
     }
 
 
     .archive-table td {
-
         color: #334155;
-
         font-size: 13px;
-
         padding: 15px 14px;
-
         border-bottom: 1px solid #f1f5f9;
     }
 
 
     .archive-table tr:hover td {
-
         background: #f8fafc;
     }
 
 
     .month-name {
-
         font-weight: 600;
-
         color: #0f172a;
     }
 
 
     .percentage-text {
-
         font-weight: 600;
-
         color: #2563eb;
     }
 
 
     .view-button {
-
         display: inline-flex;
-
         align-items: center;
-
         justify-content: center;
-
         padding: 7px 12px;
-
         background: #eff6ff;
-
         color: #2563eb;
-
         border-radius: 7px;
-
         text-decoration: none;
-
         font-size: 12px;
-
         font-weight: 600;
-
         transition: .2s;
     }
 
 
     .view-button:hover {
-
         background: #dbeafe;
     }
 
 
     .empty-archive {
-
         text-align: center;
-
         padding: 40px 20px;
-
         color: #94a3b8;
     }
 
@@ -640,14 +459,12 @@
     @media (max-width: 1100px) {
 
         .stats-grid {
-
             grid-template-columns:
                 repeat(3, minmax(0, 1fr));
         }
 
 
         .percentage-grid {
-
             grid-template-columns:
                 repeat(2, minmax(0, 1fr));
         }
@@ -658,69 +475,55 @@
     @media (max-width: 750px) {
 
         .dashboard-header h1 {
-
             font-size: 24px;
         }
 
 
         .stats-grid {
-
             grid-template-columns: 1fr;
         }
 
 
         .percentage-grid {
-
             grid-template-columns: 1fr;
         }
 
 
         .chart-header {
-
             flex-direction: column;
         }
 
 
         .filter-form {
-
             width: 100%;
-
             flex-wrap: wrap;
         }
 
 
         .filter-form select {
-
             flex: 1;
-
             min-width: 120px;
         }
 
 
         .filter-button {
-
             flex: 1;
-
             min-width: 100px;
         }
 
 
         .chart-box {
-
             height: 280px;
         }
 
 
         .dashboard-card {
-
             padding: 20px;
         }
 
 
         .archive-header {
-
             align-items: flex-start;
-
             flex-direction: column;
         }
 
@@ -741,6 +544,10 @@
     ====================================================== --}}
 
     <div class="dashboard-header">
+
+        <h1>
+            Dashboard Admin
+        </h1>
 
         <p>
             Pantau dan kelola perkembangan pengajuan masyarakat melalui SIPADULARA.
@@ -765,7 +572,6 @@
                 <div class="stat-label">
                     Total Pengajuan
                 </div>
-
 
             </div>
 
@@ -812,6 +618,7 @@
                 <div class="stat-label">
                     Sedang Diproses
                 </div>
+
             </div>
 
             <div class="stat-number">
@@ -824,6 +631,7 @@
 
         </div>
 
+
         {{-- SELESAI --}}
 
         <div class="stat-card">
@@ -833,6 +641,7 @@
                 <div class="stat-label">
                     Selesai
                 </div>
+
             </div>
 
             <div class="stat-number">
@@ -930,7 +739,23 @@
                 @endphp
 
 
-                <select name="bulan">
+                {{-- =================================================
+                     FILTER BULAN
+                ================================================== --}}
+
+                <label
+                    for="filter_bulan"
+                    class="visually-hidden"
+                >
+                    Pilih bulan
+                </label>
+
+
+                <select
+                    name="bulan"
+                    id="filter_bulan"
+                    aria-label="Pilih bulan"
+                >
 
                     @foreach($daftarBulan as $nomor => $nama)
 
@@ -946,7 +771,23 @@
                 </select>
 
 
-                <select name="tahun">
+                {{-- =================================================
+                     FILTER TAHUN
+                ================================================== --}}
+
+                <label
+                    for="filter_tahun"
+                    class="visually-hidden"
+                >
+                    Pilih tahun
+                </label>
+
+
+                <select
+                    name="tahun"
+                    id="filter_tahun"
+                    aria-label="Pilih tahun"
+                >
 
                     @for(
                         $i = now()->year;
@@ -966,6 +807,8 @@
                 </select>
 
 
+                {{-- TOMBOL --}}
+
                 <button
                     type="submit"
                     class="filter-button"
@@ -978,16 +821,24 @@
         </div>
 
 
-        {{-- GRAFIK --}}
+        {{-- =====================================================
+             GRAFIK
+        ====================================================== --}}
 
         <div class="chart-box">
 
-            <canvas id="statistikChart"></canvas>
+            <canvas
+                id="statistikChart"
+                aria-label="Grafik statistik pengajuan"
+                role="img"
+            ></canvas>
 
         </div>
 
 
-        {{-- PERSENTASE --}}
+        {{-- =====================================================
+             PERSENTASE
+        ====================================================== --}}
 
         <div class="percentage-title">
             Persentase Status Pengajuan
@@ -1043,6 +894,7 @@
                 </div>
 
             </div>
+
 
             {{-- SELESAI --}}
 
@@ -1273,7 +1125,7 @@
 
             <div class="empty-archive">
 
-                📂 Belum ada arsip statistik bulanan.
+                Belum ada arsip statistik bulanan.
 
             </div>
 
